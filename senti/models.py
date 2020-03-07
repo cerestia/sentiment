@@ -7,12 +7,6 @@ from keras.preprocessing.sequence import pad_sequences
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
-print('load model...')
-NLPmodel = load_model('C:/Users/Administrator/sentiment/senti/myUtils/sentiment.h5')
-print('load done.')
-
-print('test model...')
-
 
 def generate_id2wec(model_path):
     """
@@ -31,19 +25,24 @@ def generate_id2wec(model_path):
     return w2id,embedding_weights
 
 
-w2id,embedding_weights = generate_id2wec("C:/Users/Administrator/sentiment/senti/myUtils/word2Vec.model")
+w2id, embedding_weights = generate_id2wec("C:/Users/Administrator/sentiment/senti/myUtils/word2Vec.model")
 
-# Create your models here.
+print('load model...')
+NLPmodel = load_model('C:/Users/Administrator/sentiment/senti/myUtils/sentiment.h5')
+print('load done.')
+print('test model...')
+new_sen_list = jieba.lcut("好")
+sen2id = [w2id.get(word, 0) for word in new_sen_list]
+sen_input = pad_sequences([sen2id], 200)
+NLPmodel.predict(sen_input)[0]
+
+
 
 class NLP():
     def __init__(self):
-        model = NLPmodel
+        print("load model")
 
-    """
-    :argument
-    sentiment:输入的句子
-    :return:情感极性
-    """
+
     def preSen(self, new_sen):
 
         new_sen_list = jieba.lcut(new_sen)
