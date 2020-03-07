@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>input</title>
+</head>
+<body>
+    <form action="{%  url 'analyse'%}"  method="post" >
+     {% csrf_token %}
+        <textarea name="sentence" style="width:500px; height:500px"></textarea>
+        <input type="submit" value="analyse">
+
+    </form>
+</body>
+</html>
